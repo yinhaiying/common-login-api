@@ -9,7 +9,8 @@ const router = new Router();
 */
 
 router.post("/register",async (ctx,next) => {
-    
+    // const {username,password,email} = ctx.request.body;
+    // console.log("username:",username,password,)
 })
 
 

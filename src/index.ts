@@ -1,7 +1,7 @@
 import  Koa from "koa";
 import  Router from "koa-router";
 import mongoose from "mongoose";
-import  bodyParser  from "koa-body-parser";
+import bodyParser  from "koa-body-parser";
 
 
 import  users from "./routes/api/users";
