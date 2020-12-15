@@ -1,12 +1,15 @@
 import  Koa from "koa";
 import  Router from "koa-router";
-import  users from "./routes/api/users";
 import mongoose from "mongoose";
+import  bodyParser  from "koa-body-parser";
+
+
+import  users from "./routes/api/users";
 import dbConfig from "./config/db";
 const app = new Koa();
 const router = new Router();
 
-
+app.use(bodyParser())
 
 mongoose.connect(dbConfig.mongoURI, {
     useNewUrlParser: true,
