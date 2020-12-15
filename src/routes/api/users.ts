@@ -1,6 +1,10 @@
 import Router from "koa-router";
-import User from "../../models/User"
+import User from "../../models/User";
+
+import { enbcrypt} from "../../utils/bcrypt"
+
 const router = new Router();
+
 
 /**
 * @route Get  api/users/register
@@ -9,7 +13,7 @@ const router = new Router();
 */
 
 router.post("/register",async (ctx,next) => {
-    const {username,password,email} = ctx.request.body;
+    let {username,password,email} = ctx.request.body;
     console.log("username:",username,password,)
     const userList = await User.find({username});
     if (userList.length >0){
@@ -19,6 +23,7 @@ router.post("/register",async (ctx,next) => {
         };
         return;
     }
+    password = await enbcrypt(password);
     const newUser = new User({
         username,
         password,
