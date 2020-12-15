@@ -2,13 +2,12 @@ import  Koa from "koa";
 import  Router from "koa-router";
 import mongoose from "mongoose";
 import kodBody  from "koa-body";
-
-
 import  users from "./routes/api/users";
 import dbConfig from "./config/db";
 const app = new Koa();
 app.use(kodBody())
 const router = new Router();
+
 
 
 
@@ -23,7 +22,14 @@ mongoose.connect(dbConfig.mongoURI, {
 
 
 
+
+
+
 router.use("/api/users",users.routes());
+
+
+
+
 
 
 app.use(router.routes()).use(router.allowedMethods());;

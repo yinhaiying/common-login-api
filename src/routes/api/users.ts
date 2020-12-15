@@ -1,8 +1,10 @@
 import Router from "koa-router";
-import User from "../../models/User";
+import User, { UserSchema} from "../../models/User";
 
-import { enbcrypt} from "../../utils/bcrypt"
-
+//加密
+import { enbcrypt, compare} from "../../utils/bcrypt"
+// 生成token
+import jwt from "jsonwebtoken";
 const router = new Router();
 
 
@@ -40,9 +42,41 @@ router.post("/register",async (ctx,next) => {
             code: 500,
             msg: error
         }
-    })
-    
+    }) 
 })
 
+
+router.post("/login",async (ctx,next) => {
+  const {username,password} = ctx.request.body;
+  const findUser = await User.find({ username });
+  if(findUser.length === 0){
+      ctx.body = {
+          code:400,
+          msg:"用户名不存在"
+      }
+      return;
+  }
+  const user = findUser[0];
+  let hash = user.password;
+  const checkResult = compare(password, hash); 
+  if(checkResult){
+      const payload = {
+          id:user.id,
+          username:user.username,
+          email:user.email
+      }
+      const token = jwt.sign(payload, "secret", { expiresIn: 3600 });
+      ctx.body = {
+          code: 200,
+          msg: 'success',
+          token: "Bearer " + token
+      }
+  }else{
+      ctx.body = {
+          code: 400,
+          msg: '密码错误'
+      }
+  }
+})
 
 export default router;

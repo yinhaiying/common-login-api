@@ -4,4 +4,7 @@ export  const enbcrypt =  (password:string) => {
     return bcrypt.hash(password, saltRounds);
 }
 
-console.log ( enbcrypt("123") )
+export const compare = (password:string,hash:string) => {
+   return  bcrypt.compare(password, hash)
+}
+
