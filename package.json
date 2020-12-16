@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
-    "start": "ts-node src/index.ts"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@types/koa-jwt": "^3.3.0",
