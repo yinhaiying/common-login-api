@@ -9,9 +9,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const koa_body_1 = __importDefault(require("koa-body"));
 const users_1 = __importDefault(require("./routes/api/users"));
 const db_1 = __importDefault(require("./config/db"));
+const koa2_cors_1 = __importDefault(require("koa2-cors"));
 const app = new koa_1.default();
 app.use(koa_body_1.default());
 const router = new koa_router_1.default();
+app.use(koa2_cors_1.default());
 mongoose_1.default.connect(db_1.default.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true

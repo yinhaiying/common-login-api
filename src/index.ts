@@ -4,10 +4,13 @@ import mongoose from "mongoose";
 import kodBody  from "koa-body";
 import  users from "./routes/api/users";
 import dbConfig from "./config/db";
+import cors from "koa2-cors";
 const app = new Koa();
 app.use(kodBody())
 const router = new Router();
 
+
+app.use(cors());
 
 
 
