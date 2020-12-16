@@ -1,13 +1,17 @@
+
 import Router from "koa-router";
 import User, { UserSchema} from "../../models/User";
 
 //加密
 import { enbcrypt, compare} from "../../utils/bcrypt"
 // 生成token
-import jwt from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
+// 加密和解密
+import koaJwt from "koa-jwt";
+import { jwtSecret} from "../../config/jwtSecret"
 const router = new Router();
 
-
+const jwt = koaJwt({ secret: jwtSecret});
 /**
 * @route Get  api/users/register
 * @desc 注册地址
@@ -65,11 +69,13 @@ router.post("/login",async (ctx,next) => {
           username:user.username,
           email:user.email
       }
-      const token = jwt.sign(payload, "secret", { expiresIn: 3600 });
+      const token = jsonwebtoken.sign(payload, jwtSecret, { expiresIn: 3600 });
       ctx.body = {
           code: 200,
           msg: 'success',
-          token: "Bearer " + token
+          data:{
+              token: "Bearer " + token
+          }
       }
   }else{
       ctx.body = {
@@ -78,5 +84,22 @@ router.post("/login",async (ctx,next) => {
       }
   }
 })
+
+
+router.get("/getUserInfo", jwt,async(ctx) => {
+    // jwt将解密后的用户信息放到ctx.state.user中
+    console.log(ctx.state.user);
+    const {username,email} = ctx.state.user;
+    ctx.body = {
+        code:200,
+        data:{
+            username,
+            email
+        },
+        msg:"success"
+    }
+})
+
+
 
 export default router;
