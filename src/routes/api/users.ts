@@ -22,6 +22,7 @@ router.post("/register",async (ctx,next) => {
     let {username,password,email} = ctx.request.body;
     console.log("username:",username,password,)
     const userList = await User.find({username});
+    //TODO:各种校验
     if (userList.length >0){
         ctx.body = {
             code:400,
