@@ -1,15 +1,4 @@
 "use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -98,12 +87,29 @@ router.post("/login", async (ctx, next) => {
 });
 router.get("/getUserInfo", jwt, async (ctx) => {
     // jwt将解密后的用户信息放到ctx.state.user中
-    console.log(ctx.state.user);
-    const _a = ctx.state.user, { password } = _a, rest = __rest(_a, ["password"]);
-    ctx.body = {
-        code: 200,
-        data: Object.assign({}, rest),
-        msg: "success"
-    };
+    const { id } = ctx.state.user;
+    const user = await User_1.default.findById(id);
+    if (user) {
+        const { username, columnId, authorId, email, createdAt, _id } = user;
+        ctx.body = {
+            code: 200,
+            data: {
+                username,
+                columnId,
+                authorId,
+                email,
+                createdAt,
+                _id
+            },
+            msg: "success"
+        };
+    }
+    else {
+        ctx.body = {
+            code: 400,
+            data: {},
+            msg: "用户不存在"
+        };
+    }
 });
 exports.default = router;
