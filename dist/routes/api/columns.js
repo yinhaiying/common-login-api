@@ -7,6 +7,7 @@ const koa_router_1 = __importDefault(require("koa-router"));
 const router = new koa_router_1.default();
 const Column_1 = __importDefault(require("../../models/Column"));
 const jwtSecret_1 = require("../../config/jwtSecret");
+const Post_1 = __importDefault(require("../../models/Post"));
 // 创建专栏
 router.post("/createColumn", jwtSecret_1.jwt, async (ctx) => {
     const { title, avatar, description, columnId } = ctx.request.body;
@@ -60,7 +61,20 @@ router.get("/", jwtSecret_1.jwt, async (ctx) => {
     });
 });
 // 获取专栏的详情
-router.get("/:id", jwtSecret_1.jwt, async (ctx) => {
+router.get("/:id/posts", async (ctx) => {
     const { id } = ctx.params;
+    await Post_1.default.find({ columnId: id }).then((res) => {
+        if (res) {
+            ctx.body = {
+                code: 200,
+                data: {
+                    list: res,
+                    msg: "success"
+                }
+            };
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
 });
 exports.default = router;
