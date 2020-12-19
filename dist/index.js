@@ -9,6 +9,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const koa_body_1 = __importDefault(require("koa-body"));
 const users_1 = __importDefault(require("./routes/api/users"));
 const posts_1 = __importDefault(require("./routes/api/posts"));
+const columns_1 = __importDefault(require("./routes/api/columns"));
 const db_1 = __importDefault(require("./config/db"));
 const koa2_cors_1 = __importDefault(require("koa2-cors"));
 const app = new koa_1.default();
@@ -25,6 +26,7 @@ mongoose_1.default.connect(db_1.default.mongoURI, {
 });
 router.use("/api/users", users_1.default.routes());
 router.use("/api/posts", posts_1.default.routes());
+router.use("/api/columns", columns_1.default.routes());
 app.use(router.routes()).use(router.allowedMethods());
 ;
 const port = process.env.PORT || 5000;

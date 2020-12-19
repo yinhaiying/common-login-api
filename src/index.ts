@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import kodBody  from "koa-body";
 import  users from "./routes/api/users";
 import posts from "./routes/api/posts";
+import columns from "./routes/api/columns";
 
 import dbConfig from "./config/db";
 import cors from "koa2-cors";
@@ -32,6 +33,7 @@ mongoose.connect(dbConfig.mongoURI, {
 
 router.use("/api/users",users.routes());
 router.use("/api/posts",posts.routes());
+router.use("/api/columns",columns.routes());
 
 
 
