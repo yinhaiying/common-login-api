@@ -21,9 +21,17 @@ exports.UserSchema = new Schema({
     avatar: {
         type: String
     },
-    date: {
+    createdAt: {
         type: Date,
         default: Date.now
+    },
+    columnId: {
+        type: String,
+        default: Math.floor(Math.random() * 10000000000).toString()
+    },
+    authorId: {
+        type: String,
+        default: Math.floor(Math.random() * 10000000000).toString()
     }
 });
 const User = mongoose_1.default.model("users", exports.UserSchema);
