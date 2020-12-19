@@ -7,11 +7,10 @@ import { enbcrypt, compare } from "../../utils/bcrypt"
 // 生成token
 import jsonwebtoken from "jsonwebtoken";
 // 加密和解密
-import koaJwt from "koa-jwt";
-import { jwtSecret } from "../../config/jwtSecret"
+import { jwtSecret, jwt } from "../../config/jwtSecret"
 const router = new Router();
 
-const jwt = koaJwt({ secret: jwtSecret });
+
 /**
 * @route Get  api/users/register
 * @desc 注册地址

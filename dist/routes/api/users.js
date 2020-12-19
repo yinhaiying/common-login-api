@@ -10,10 +10,8 @@ const bcrypt_1 = require("../../utils/bcrypt");
 // 生成token
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // 加密和解密
-const koa_jwt_1 = __importDefault(require("koa-jwt"));
 const jwtSecret_1 = require("../../config/jwtSecret");
 const router = new koa_router_1.default();
-const jwt = koa_jwt_1.default({ secret: jwtSecret_1.jwtSecret });
 /**
 * @route Get  api/users/register
 * @desc 注册地址
@@ -85,7 +83,7 @@ router.post("/login", async (ctx, next) => {
         };
     }
 });
-router.get("/getUserInfo", jwt, async (ctx) => {
+router.get("/getUserInfo", jwtSecret_1.jwt, async (ctx) => {
     // jwt将解密后的用户信息放到ctx.state.user中
     const { id } = ctx.state.user;
     const user = await User_1.default.findById(id);
