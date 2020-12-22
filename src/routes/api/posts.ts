@@ -36,5 +36,40 @@ router.post("/createPost",jwt,async(ctx) => {
     }
 })
 
+/* 
+
+
+
+*/
+router.get("/:id", jwt, async (ctx) => {
+    const { id } = ctx.params;
+    console.log("id:",id)
+    if (!id) {
+        ctx.body = {
+            code: 400,
+            data: {},
+            msg: "参数错误"
+        }
+    } else {
+       await Post.findById({_id:id}).then((post) => {
+            console.log("post:",post)
+          if(post){
+              ctx.body = {
+                  code:200,
+                  data:post,
+                  msg:"success"
+              }
+          }else{
+              ctx.body = {
+                  code: 400,
+                  data: {},
+                  msg: "文章不存在"
+              }
+          }
+        })
+
+    }
+})
+
 
 export default router;
