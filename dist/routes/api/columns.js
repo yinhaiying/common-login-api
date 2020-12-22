@@ -47,7 +47,7 @@ router.post("/createColumn", jwtSecret_1.jwt, async (ctx) => {
 });
 // 获取专栏列表
 // TODO:暂时没有处理分页
-router.get("/", jwtSecret_1.jwt, async (ctx) => {
+router.get("/", async (ctx) => {
     await Column_1.default.find().then((res) => {
         if (res) {
             ctx.body = {
